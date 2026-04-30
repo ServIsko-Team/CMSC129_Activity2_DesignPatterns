@@ -39,7 +39,7 @@ The backend treats the app like a **real-time multiplayer game**, using Redis fo
 
 #### ii. Concept in Conyo 🗣️
 
-Okay so like imagine that you have like a sack and this is where you like insert all Isko/Iska that you have huli. The Singleton pattern is what implies na isa you have like only one sack na ginagawa kahit saan mo i-access sa app. This like a *class president* na isa lang — lahat nag-aask sa kanya, and you don't like appoint one "class president" per section talaga.
+Okay so like imagine that you have like a sack and this is where you like insert all Isko/Iska that you have huli. The Singleton pattern is what implies na you have like only one sack na ginagawa kahit saan mo i-access sa app. This like a *class president* na isa lang — lahat nag-aask sa kanya, and you don't like appoint one "class president" per section talaga.
 
 In IskoLuv, ang **IskodexStore** is like the central state repository of all "caught" profiles. We use the Singleton para ma make sure na **isa lang** ang instance ng store na to sa buong lifecycle ng Flutter app. Basta man nasa Map ka, sa Matches tab, o may nare-receive kang notif — palagi kang nag-a-access sa **exact same object** sa memory.
 
