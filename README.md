@@ -1,6 +1,6 @@
 # 💘 IskoLuv — UPV Dating App with a Twist
 
-> *"Di ka makahanap ng match sa bahay. Lakad ka."*
+> *"Di ka makahanap ng match sa bahay. Edi MagLakad ka."*
 
 ---
 
@@ -10,7 +10,7 @@
 
 ### The Twist: *Catch 'Em All* — Encounter Mechanic 🗺️
 
-Unlike traditional dating apps where users can swipe through profiles from anywhere, **IskoLuv locks profiles behind physical presence**. A user's profile only becomes discoverable when two users are **within a 10-meter radius** of each other, or when a user visits designated **campus landmarks** (e.g., the Oblation, the DAC, the Fish Port).
+Unlike traditional dating apps where users can swipe through profiles from anywhere, **IskoLuv locks profiles behind physical presence**. A user's profile only becomes discoverable when two users are **within a 10-meter radius** of each other, or when a user visits designated **campus landmarks** (e.g., the Oblation, CAS, CUB).
 
 This transforms the dating experience into a **real-world campus scavenger hunt** — encouraging genuine in-person encounters and rewarding students who actively explore UPV Miagao.
 
@@ -39,7 +39,7 @@ The backend treats the app like a **real-time multiplayer game**, using Redis fo
 
 #### ii. Concept in Conyo 🗣️
 
-Okay so imagine mo na may isang *notebook* ka lang sa buong app para i-track lahat ng mga Isko/Iska na na-"catch" mo. Yung Singleton pattern — isa lang talaga ang *instance* na ginagawa kahit saan mo i-access sa app. Para lang siya sa isang *class president* na isa lang — lahat nag-aask sa kanya, hindi sila nagtatayo ng isa-isang sariling *class president* per section.
+Okay so imagine may ara kamo *sako* kag sa muni na sako gina sulod mo tanan nga Isko/Iska na na-dakop mo. Ang Singleton pattern — ga-imply na isa lang ka "sako" na ginagawa kahit saan mo i-access sa app. Para lang siya sa isang *class president* na isa lang — lahat nag-aask sa kanya, hindi sila nagtatayo ng isa-isang sariling *class president* per section.
 
 Sa IskoLuv, ang **IskodexStore** ang central state repository ng lahat ng "caught" profiles. Ginagamit namin ang Singleton para siguruhing **isa lang** ang instance ng store na to sa buong lifecycle ng Flutter app. Basta man nasa Map ka, sa Matches tab, o may nare-receive kang notif — palagi kang nag-a-access sa **exact same object** sa memory.
 
