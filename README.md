@@ -39,9 +39,9 @@ The backend treats the app like a **real-time multiplayer game**, using Redis fo
 
 #### ii. Concept in Conyo 🗣️
 
-Okay so imagine may ara kamo *sako* kag sa muni na sako gina sulod mo tanan nga Isko/Iska na na-dakop mo. Ang Singleton pattern — ga-imply na isa lang ka "sako" na ginagawa kahit saan mo i-access sa app. Para lang siya sa isang *class president* na isa lang — lahat nag-aask sa kanya, hindi sila nagtatayo ng isa-isang sariling *class president* per section.
+Okay so like imagine that you have like a sack and this is where you like insert all Isko/Iska that you have huli. The Singleton pattern is what implies na isa you have like only one sack na ginagawa kahit saan mo i-access sa app. This like a *class president* na isa lang — lahat nag-aask sa kanya, and you don't like appoint one "class president" per section talaga.
 
-Sa IskoLuv, ang **IskodexStore** ang central state repository ng lahat ng "caught" profiles. Ginagamit namin ang Singleton para siguruhing **isa lang** ang instance ng store na to sa buong lifecycle ng Flutter app. Basta man nasa Map ka, sa Matches tab, o may nare-receive kang notif — palagi kang nag-a-access sa **exact same object** sa memory.
+In IskoLuv, ang **IskodexStore** is like the central state repository of all "caught" profiles. We use the Singleton para ma make sure na **isa lang** ang instance ng store na to sa buong lifecycle ng Flutter app. Basta man nasa Map ka, sa Matches tab, o may nare-receive kang notif — palagi kang nag-a-access sa **exact same object** sa memory.
 
 **Applied to:** The **IskodexStore** — the in-app Pokédex-style list of everyone you've encountered on campus.
 
@@ -68,9 +68,9 @@ graph TD
 
 #### iv. Why It Works Nga 💡
 
-**Without Singleton:** Bawat ViewModel mag-i-instantiate ng sarili nilang version ng match list. Kapag nag-encounter ka ng isang tao malapit sa Library, yung data na yun hindi agad makikita sa "Matches" tab — kasi magkaibang objects ang tinitingnan nila. Ghost data ang mangyayari, plus sobrang sayang ng memory dahil maraming redundant na objects.
+**Without Singleton:** Every ViewModel you have to like instantiate your own version ng match list. Kapag like you encounter one person na malapit sa Library, yung data na yun hindi agad makikita sa "Matches" tab — kasi magkaibang objects that they are looking at. Just like your crush na hinde ka gusto, ghost data ang kinalabasan beh plus sobrang sayang ng memory dahil maraming redundant na objects.
 
-**With Singleton:** Isa lang ang *source of truth*. Kahit anong screen ang buksan mo, iisa lang ang IskodexStore na kino-konsulta nila. Data integrity guaranteed, memory efficient, and walang sync issues — na-catch mo ang isang tao malapit sa Oblation, visible agad siya sa lahat ng views.
+**With Singleton:** Isa lang ang *source of truth*. Kahit anong screen ang buksan mo, only one lang ang IskodexStore that they consult. Data integrity guaranteed, memory efficient, and walang sync issues — na-catch mo ang isang tao malapit sa Oblation, visible agad siya sa lahat ng views. So like time to stalk your crush guyssss, chozz.
 
 ---
 
@@ -118,7 +118,7 @@ class IskodexStore {
 
 #### ii. Concept in Conyo 🗣️
 
-Imagine mo na ang mag-order sa canteen — hindi mo kailangan magluto, mag-wash ng pinggan, at mag-set ng table. May isang *ate sa counter* lang ang kinakausap mo, at siya na ang bahala sa lahat ng nangyayari sa likod. Yun ang Facade — isa lang ang *entry point*, kahit maraming klase ng trabaho ang nangyayari sa loob.
+Imagine mo that you to like order sa canteen — hindi mo kailangan magluto, mag-wash ng pinggan, at mag-set ng table (I ain't doing all that, duhhh we a helper kaya). May isang *ate sa counter* lang ang kinakausap mo, and she like handles all those task at the back. Yun ang Facade — isa lang ang *entry point*, kahit maraming klase ng work that happens sa loob.
 
 Sa IskoLuv, kapag may na-encounter kang user, maraming nangyayari sabay-sabay: nag-i-issue ng RPC call sa Go backend, nag-u-update ng local IskodexStore, at nag-ti-trigger ng haptic feedback. Ang **DiscoveryFacade** ang nag-a-abstract ng lahat ng ito. Ang MapViewModel — isang method lang ang tatawagin: `handleCapture()`.
 
@@ -150,9 +150,9 @@ graph TD
 
 #### iv. Why It Works Nga 💡
 
-**Without Facade:** Ang MapViewModel magiging grabe kadaming responsibilidad — mag-a-await siya ng RPC, mag-se-save sa local store, mag-vi-vibrate ang phone — lahat sa loob ng isang ViewModel. Pag nagbago ang logic ng Nakama communication o ng haptic engine, kailangan mong hanapin at i-update ang *bawat* ViewModel na nag-ha-handle ng encounters. Maintenance nightmare.
+**Without Facade:** Ang MapViewModel will have like a lot of responsibilities unlike me na super chill lang — mag-a-await siya ng RPC, mag-se-save sa local store, mag-vi-vibrate ang phone — lahat sa loob ng isang ViewModel. Pag nagchange na ang logic ng Nakama communication o ng haptic engine, you have to like find at i-update ang *bawat* ViewModel na nag-ha-handle ng encounters. Maintenance nightmare.
 
-**With Facade:** Isa lang ang kinakausap ng ViewModel — ang DiscoveryFacade. Doon na naka-encapsulate ang lahat ng complexity. Pag nagbago ang backend communication logic, doon mo lang i-u-update — hindi mo na kailangang hawakan ang presentation layer. Clean, decoupled, and MVVM-compliant.
+**With Facade:** ViewModel is very loyal like me, its only talking to DiscoveryFacade. Doon na naka-encapsulate ang lahat ng complexity. Pag nagbago ang backend communication logic, doon mo lang i-u-update — hindi mo na kailangang hawakan ang presentation layer. Clean, decoupled, and MVVM-compliant.
 
 ---
 
@@ -199,9 +199,9 @@ class DiscoveryFacade {
 
 #### ii. Concept in Conyo 🗣️
 
-Para lang siya sa *group chat notification*. Hindi ka nag-o-open ng GC every second para makita kung may nagchat — hihintay ka lang, at pag may message, ma-no-notify ka agad. Yun ang Observer — ang Subject ang nag-ma-manage ng listahan ng mga nakikinig (Observers), at sila lang binibigyan ng update kapag may nangyari.
+Para lang siya sa *group chat notification*. You don't open a GC every second para like makita kung may nagchat — you just have to wait, at pag may message, ma-no-notify ka agad. Yun ang Observer — ang Subject ang nag-ma-manage ng listahan ng mga nakikinig (Observers), at sila lang binibigyan ng update kapag may nangyari.
 
-Sa IskoLuv, ang **ProximityManager** sa Go backend ang Subject. Lahat ng active users na naka-connect via WebSocket ay mga Observers. Instead of puro polling ng Flutter app ("meron na ba? meron na? paano ngayon?"), ang Go server ang mag-pu-push ng encounter event only when two users cross the 10-meter threshold in Redis.
+Sa IskoLuv, ang **ProximityManager** sa Go backend ang Subject. All of the users connected via WebSocket ay mga Observers. Instead of puro polling ng Flutter app ("meron na ba? meron na? paano ngayon?"), ang Go server ang mag-pu-push ng encounter event only when two users cross the 10-meter threshold in Redis.
 
 **Applied to:** The **real-time proximity detection system** — backend push notifications when two users enter each other's range.
 
@@ -229,7 +229,7 @@ graph TD
 
 #### iv. Why It Works Nga 💡
 
-**Without Observer:** Kung mag-po-poll ang Flutter app sa server every second — grabe ang battery drain, nauubos ang mobile data, at nag-o-overload ang server ng walang kwentang requests. Kahit walang encounter, laging may traffic. Hindi sustainable, especially sa isang location-based app na gustong panatilihing bukas ng users.
+**Without Observer:** Kung mag-po-poll ang Flutter app sa server every second (napaka obnoxious naman) — grabe talaga ang battery drain, nauubos ang mobile data, at nag-o-overload ang server ng walang kwentang requests. Even if there is no encounter, laging may traffic. Hindi sustainable, especially sa isang location-based app na gustong panatilihing bukas ng users.
 
 **With Observer:** Naka-subscribe ang bawat user sa ProximityManager. Silent ang system hangga't walang encounter. Pag may dalawang users na nag-cross ng 10-meter threshold sa Redis GEOSEARCH — only *then* mag-pu-push ang server. Instant, game-like ang feel, at minimal ang network traffic. Reactive architecture at its finest.
 
