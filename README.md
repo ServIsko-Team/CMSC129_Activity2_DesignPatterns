@@ -1,6 +1,6 @@
 # 💘 IskoLuv — UPV Dating App with a Twist
 
-> *"Di ka makahanap ng match sa bahay. Edi MagLakad ka."*
+> *"Di ka makahanap ng organic encounter sa bahay. Edi MagLakad ka."*
 
 ---
 
@@ -39,11 +39,11 @@ The backend treats the app like a **real-time multiplayer game**, using Redis fo
 
 #### ii. Concept in Conyo 🗣️
 
-Okay so like imagine that you have like a sack and this is where you like insert all Isko/Iska that you have huli. The Singleton pattern is what implies na you have like only one sack na ginagawa kahit saan mo i-access sa app. This like a *class president* na isa lang — lahat nag-aask sa kanya, and you don't like appoint one "class president" per section talaga.
+Okay so like imagine that you have like a sack and this is where you like insert all Isko/Iska that nahuli mo. The Singleton pattern is what implies na you have like only one sack na ginagawa kahit saan mo i-access sa app. This like a *class president* na isa lang — lahat nag-aask sa kanya, and you don't like appoint one "class president" per student na naga-ask sa kanya diba??
 
-In IskoLuv, ang **IskodexStore** is like the central state repository of all "caught" profiles. We use the Singleton para ma make sure na **isa lang** ang instance ng store na to sa buong lifecycle ng Flutter app. Basta man nasa Map ka, sa Matches tab, o may nare-receive kang notif — palagi kang nag-a-access sa **exact same object** sa memory.
+In IskoLuv, ang **IskodexStore** is like the central state repository of all "nahuli" na profiles. We use the Singleton para ma make sure na **isa lang** ang instance ng store na to sa buong lifecycle ng Flutter app. Basta man nasa Map ka, sa Matches tab, o may nare-receive kang notif — palagi kang nag-a-access sa **exact same object** sa memory.
 
-**Applied to:** The **IskodexStore** — the in-app Pokédex-style list of everyone you've encountered on campus.
+**Applied to:** The **IskodexStore** — the in-app Pokédex-style list ng everyone you've encountered sa campus.
 
 ---
 
@@ -68,9 +68,9 @@ graph TD
 
 #### iv. Why It Works Nga 💡
 
-**Without Singleton:** Every ViewModel you have to like instantiate your own version ng match list. Kapag like you encounter one person na malapit sa Library, yung data na yun hindi agad makikita sa "Matches" tab — kasi magkaibang objects that they are looking at. Just like your crush na hinde ka gusto, ghost data ang kinalabasan beh plus sobrang sayang ng memory dahil maraming redundant na objects.
+**Without Singleton:** Every ViewModel you have to like gawa your own version ng match list. Kapag you encounter one person na malapit sa Library, yung data na yun hindi agad makikita sa "Matches" tab — kasi they are looking at magkaibang objects na. Just like your crush na hindi ka gusto, ghost data ang kinalabasan plus sobrang sayang ng memory dahil maraming redundant na objects.
 
-**With Singleton:** Isa lang ang *source of truth*. Kahit anong screen ang buksan mo, only one lang ang IskodexStore that they consult. Data integrity guaranteed, memory efficient, and walang sync issues — na-catch mo ang isang tao malapit sa Oblation, visible agad siya sa lahat ng views. So like time to stalk your crush guyssss, chozz.
+**With Singleton:** Isa lang ang *source of truth*. Kahit anong screen ang buksan mo, only one lang ang IskodexStore that they consult. Data integrity guaranteed, memory efficient, and walang sync issues — na-catch mo ang isang tao malapit sa Oblation, visible agad siya sa lahat ng views. So like time to stalk your crush guyssss.
 
 ---
 
@@ -118,7 +118,7 @@ class IskodexStore {
 
 #### ii. Concept in Conyo 🗣️
 
-Imagine mo that you to like order sa canteen — hindi mo kailangan magluto, mag-wash ng pinggan, at mag-set ng table (I ain't doing all that, duhhh we a helper kaya). May isang *ate sa counter* lang ang kinakausap mo, and she like handles all those task at the back. Yun ang Facade — isa lang ang *entry point*, kahit maraming klase ng work that happens sa loob.
+Imagine mo that you order sa canteen — hindi mo kailangan magluto, mag-wash ng pinggan, at mag-set ng table (I ain't doing all that, duhhh we a helper kaya). May isang *ate sa counter* lang ang kinakausap mo, and she like handles all those task at the back. Yun ang Facade — isa lang ang *entry point*, kahit maraming klase ng work that happens sa loob.
 
 Sa IskoLuv, kapag may na-encounter kang user, maraming nangyayari sabay-sabay: nag-i-issue ng RPC call sa Go backend, nag-u-update ng local IskodexStore, at nag-ti-trigger ng haptic feedback. Ang **DiscoveryFacade** ang nag-a-abstract ng lahat ng ito. Ang MapViewModel — isang method lang ang tatawagin: `handleCapture()`.
 
@@ -150,7 +150,7 @@ graph TD
 
 #### iv. Why It Works Nga 💡
 
-**Without Facade:** Ang MapViewModel will have like a lot of responsibilities unlike me na super chill lang — mag-a-await siya ng RPC, mag-se-save sa local store, mag-vi-vibrate ang phone — lahat sa loob ng isang ViewModel. Pag nagchange na ang logic ng Nakama communication o ng haptic engine, you have to like find at i-update ang *bawat* ViewModel na nag-ha-handle ng encounters. Maintenance nightmare.
+**Without Facade:** Ang MapViewModel will have like a lot of responsibilities unlike me na super chill lang — mag-wwait siya ng RPC, mag-s-save sa local store, mag-vi-vibrate ang phone — lahat sa loob ng isang ViewModel. Pag nagchange na ang logic ng Nakama communication o ng haptic engine, you have to like find at i-update ang *bawat* ViewModel na nag-ha-handle ng encounters. Maintenance nightmare.
 
 **With Facade:** ViewModel is very loyal like me, its only talking to DiscoveryFacade. Doon na naka-encapsulate ang lahat ng complexity. Pag nagbago ang backend communication logic, doon mo lang i-u-update — hindi mo na kailangang hawakan ang presentation layer. Clean, decoupled, and MVVM-compliant.
 
@@ -229,7 +229,7 @@ graph TD
 
 #### iv. Why It Works Nga 💡
 
-**Without Observer:** Kung mag-po-poll ang Flutter app sa server every second (napaka obnoxious naman) — grabe talaga ang battery drain, nauubos ang mobile data, at nag-o-overload ang server ng walang kwentang requests. Even if there is no encounter, laging may traffic. Hindi sustainable, especially sa isang location-based app na gustong panatilihing bukas ng users.
+**Without Observer:** Kung mag-po-poll ang Flutter app sa server every second (napaka obnoxious naman) — grabe talaga ang battery drain, nauubos ang mobile data, at nag-o-overload ang server ng walang kwentang requests. Even if there is no encounter, laging may traffic. Hindi sustainable, especially sa isang location-based app na gustong laging bukas ng users.
 
 **With Observer:** Naka-subscribe ang bawat user sa ProximityManager. Silent ang system hangga't walang encounter. Pag may dalawang users na nag-cross ng 10-meter threshold sa Redis GEOSEARCH — only *then* mag-pu-push ang server. Instant, game-like ang feel, at minimal ang network traffic. Reactive architecture at its finest.
 
@@ -370,13 +370,11 @@ classDiagram
 ---
 
 ## 👥 Group Members
-
-| Name | Role |
-|------|------|
-| *(Member 1)* | *(Role)* |
-| *(Member 2)* | *(Role)* |
-| *(Member 3)* | *(Role)* |
-
+Aspera, Eryl Joseph
+Del Rosario, Nina Claudia
+Hernia, Christian Joseph
+Oyco, Cedric
+Tolentino, EJ
 ---
 
 *CMSC 129 Software Engineering II — Activity #2: System Architecture*
