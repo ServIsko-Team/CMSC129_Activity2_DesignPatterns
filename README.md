@@ -39,9 +39,9 @@ The backend treats the app like a **real-time multiplayer game**, using Redis fo
 
 #### ii. Concept in Conyo 🗣️
 
-Okay so like imagine that you have like a sack and this is where you like insert all Isko/Iska that nahuli mo. The Singleton pattern is what implies na you have like only one sack na ginagawa kahit saan mo i-access sa app. This like a *class president* na isa lang — lahat nag-aask sa kanya, and you don't like appoint one "class president" per student na naga-ask sa kanya diba??
+Okay so like imagine that you have like an eco bag for all your freebies sa org fair—lahat ng nahuli mong Isko/Iska, dito mo lang nilalagay, hindi pwede madaming bag. The Singleton pattern is what implies na you have like only one eco bag na ginagawa kahit saan mo i-access sa app. Parang sa org, isa lang talaga ang *class president* — lahat nag-aask sa kanya, and you don't like appoint one "class president" per student na naga-ask sa kanya diba??
 
-In IskoLuv, ang **IskodexStore** is like the central state repository of all "nahuli" na profiles. We use the Singleton para ma make sure na **isa lang** ang instance ng store na to sa buong lifecycle ng Flutter app. Basta man nasa Map ka, sa Matches tab, o may nare-receive kang notif — palagi kang nag-a-access sa **exact same object** sa memory.
+In IskoLuv, ang **IskodexStore** is like the central state repository of all "nahuli" na profiles. We use the Singleton para ma make sure na **isa lang** ang instance ng store na to sa buong lifecycle ng Flutter app. Basta man nasa Map ka, sa Matches tab, o may nare-receive kang notif — hindi ka nagdadala ng bagong bag every time, palagi kang nag-a-access sa **exact same object** sa memory.
 
 **Applied to:** The **IskodexStore** — the in-app Pokédex-style list ng everyone you've encountered sa campus.
 
@@ -120,7 +120,7 @@ class IskodexStore {
 
 Imagine mo that you order sa canteen — hindi mo kailangan magluto, mag-wash ng pinggan, at mag-set ng table (I ain't doing all that, duhhh we a helper kaya). May isang *ate sa counter* lang ang kinakausap mo, and she like handles all those task at the back. Yun ang Facade — isa lang ang *entry point*, kahit maraming klase ng work that happens sa loob.
 
-Sa IskoLuv, kapag may na-encounter kang user, maraming nangyayari sabay-sabay: nag-i-issue ng RPC call sa Go backend, nag-u-update ng local IskodexStore, at nag-ti-trigger ng haptic feedback. Ang **DiscoveryFacade** ang nag-a-abstract ng lahat ng ito. Ang MapViewModel — isang method lang ang tatawagin: `handleCapture()`.
+Sa IskoLuv, kapag may na-encounter kang user, maraming nangyayari sabay-sabay: nag-i-issue ng RPC call sa Go backend, nag-u-update ng local IskodexStore, at nag-ti-trigger ng haptic feedback. Ang **DiscoveryFacade** ang nag-a-abstract ng lahat ng ito. Ang MapViewModel — isang method lang ang tatawagin: `handleCapture()`. Isang tawag lang, tapos na lahat ng hanash mo—no need to chika with every kitchen staff.
 
 **Applied to:** The **encounter/capture flow** — when a user is detected within 10 meters and a match is initiated.
 
@@ -152,7 +152,7 @@ graph TD
 
 **Without Facade:** Ang MapViewModel will have like a lot of responsibilities unlike me na super chill lang — mag-wwait siya ng RPC, mag-s-save sa local store, mag-vi-vibrate ang phone — lahat sa loob ng isang ViewModel. Pag nagchange na ang logic ng Nakama communication o ng haptic engine, you have to like find at i-update ang *bawat* ViewModel na nag-ha-handle ng encounters. Maintenance nightmare.
 
-**With Facade:** ViewModel is very loyal like me, its only talking to DiscoveryFacade. Doon na naka-encapsulate ang lahat ng complexity. Pag nagbago ang backend communication logic, doon mo lang i-u-update — hindi mo na kailangang hawakan ang presentation layer. Clean, decoupled, and MVVM-compliant.
+**With Facade:** Loyal si ViewModel, isa lang talaga kausap niya—hindi siya two-timer, promise! Its only talking to DiscoveryFacade. Doon na naka-encapsulate ang lahat ng complexity. Pag nagbago ang backend communication logic, doon mo lang i-u-update — hindi mo na kailangang hawakan ang presentation layer. Clean, decoupled, and MVVM-compliant.
 
 ---
 
@@ -199,7 +199,7 @@ class DiscoveryFacade {
 
 #### ii. Concept in Conyo 🗣️
 
-Para lang siya sa *group chat notification*. You don't open a GC every second para like makita kung may nagchat — you just have to wait, at pag may message, ma-no-notify ka agad. Yun ang Observer — ang Subject ang nag-ma-manage ng listahan ng mga nakikinig (Observers), at sila lang binibigyan ng update kapag may nangyari.
+Para lang siya sa *group chat notification*. You don't open a GC every second para like makita kung may Chill ka lang, tapos pag may importanteng announcement, ping agad sa'yo. Yun ang Observer — ang Subject ang nag-ma-manage ng listahan ng mga nakikinig (Observers), at sila lang binibigyan ng update kapag may nangyari.
 
 Sa IskoLuv, ang **ProximityManager** sa Go backend ang Subject. All of the users connected via WebSocket ay mga Observers. Instead of puro polling ng Flutter app ("meron na ba? meron na? paano ngayon?"), ang Go server ang mag-pu-push ng encounter event only when two users cross the 10-meter threshold in Redis.
 
@@ -231,7 +231,7 @@ graph TD
 
 **Without Observer:** Kung mag-po-poll ang Flutter app sa server every second (napaka obnoxious naman) — grabe talaga ang battery drain, nauubos ang mobile data, at nag-o-overload ang server ng walang kwentang requests. Even if there is no encounter, laging may traffic. Hindi sustainable, especially sa isang location-based app na gustong laging bukas ng users.
 
-**With Observer:** Naka-subscribe ang bawat user sa ProximityManager. Silent ang system hangga't walang encounter. Pag may dalawang users na nag-cross ng 10-meter threshold sa Redis GEOSEARCH — only *then* mag-pu-push ang server. Instant, game-like ang feel, at minimal ang network traffic. Reactive architecture at its finest.
+**With Observer:** Naka-subscribe ang bawat user sa ProximityManager. Tahimik lang, parang sa library—walang ingay hangga’t walang chismis (encounter). Pag may dalawang users na nag-cross ng 10-meter threshold sa Redis GEOSEARCH — only *then* mag-pu-push ang server. Instant, game-like ang feel, at minimal ang network traffic. Reactive architecture at its finest. Parang org life—react ka lang pag may event, hindi ka naman laging on the go.
 
 ---
 
